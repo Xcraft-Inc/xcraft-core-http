@@ -16,7 +16,7 @@ exports.get = function (fileUrl, outputFile)
   if (url.protocol == 'https:')
     protocol = 'https';
 
-  var http  = require (protocol);
+  var http = require (protocol);
 
   var options =
   {
