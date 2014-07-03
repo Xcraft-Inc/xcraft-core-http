@@ -10,7 +10,7 @@ exports.get = function (fileUrl, outputFile)
 {
   var http  = require ('http');
   var url   = require ('url');
-  var zogFs = require ('./zogFs.js');
+  var zogFs = require ('zogFs');
 
   var options =
   {
