@@ -8,15 +8,21 @@ var zogLog = require ('zogLog') (moduleName);
 
 exports.get = function (fileUrl, outputFile)
 {
-  var http  = require ('http');
   var url   = require ('url');
   var zogFs = require ('zogFs');
 
+  var protocol = 'http';
+  urlObj = url.parse (fileUrl);
+  if (url.protocol == 'https:')
+    protocol = 'https';
+
+  var http  = require (protocol);
+
   var options =
   {
-    host: url.parse (fileUrl).host,
-    port: 80,
-    path: url.parse (fileUrl).pathname
+    host: urlObj.host,
+    port: urlObj.port,
+    path: urlObj.pathname
   };
 
   zogFs.mkdir (path.dirname (outputFile));
