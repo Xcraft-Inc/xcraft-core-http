@@ -4,7 +4,7 @@ var moduleName = 'http';
 var fs   = require ('fs');
 var path = require ('path');
 
-var zogLog = require ('../lib/zogLog.js') (moduleName);
+var zogLog = require ('zogLog') (moduleName);
 
 exports.get = function (fileUrl, outputFile)
 {
