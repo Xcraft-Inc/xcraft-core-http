@@ -6,7 +6,7 @@ var path = require ('path');
 
 var zogLog = require ('zogLog') (moduleName);
 
-exports.get = function (fileUrl, outputFile)
+exports.get = function (fileUrl, outputFile, callbackEnd)
 {
   var url   = require ('url');
   var zogFs = require ('zogFs');
@@ -39,6 +39,8 @@ exports.get = function (fileUrl, outputFile)
     res.on ('end', function ()
     {
       file.end ();
+      if (callbackEnd)
+        callbackEnd ();
     });
   });
 }
