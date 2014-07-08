@@ -20,7 +20,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd)
 
   var options =
   {
-    host: urlObj.host,
+    host: urlObj.hostname,
     port: urlObj.port,
     path: urlObj.pathname,
     rejectUnauthorized: false
