@@ -11,7 +11,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress)
   var zogFs = require ('zogFs');
 
   var protocol = 'http';
-  urlObj = url.parse (fileUrl);
+  var urlObj = url.parse (fileUrl);
   if (urlObj.protocol == 'https:')
     protocol = 'https';
 
