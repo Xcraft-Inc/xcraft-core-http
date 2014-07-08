@@ -13,7 +13,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd)
 
   var protocol = 'http';
   urlObj = url.parse (fileUrl);
-  if (url.protocol == 'https:')
+  if (urlObj.protocol == 'https:')
     protocol = 'https';
 
   var http = require (protocol);
@@ -22,7 +22,8 @@ exports.get = function (fileUrl, outputFile, callbackEnd)
   {
     host: urlObj.host,
     port: urlObj.port,
-    path: urlObj.pathname
+    path: urlObj.pathname,
+    rejectUnauthorized: false
   };
 
   zogFs.mkdir (path.dirname (outputFile));
