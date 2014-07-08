@@ -32,10 +32,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd)
 
   http.get (options, function (res)
   {
-    res.on ('data', function (data)
-    {
-      file.write (data);
-    });
+    res.pipe (file);
 
     res.on ('end', function ()
     {
