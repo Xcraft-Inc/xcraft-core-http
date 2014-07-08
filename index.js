@@ -6,7 +6,7 @@ var path = require ('path');
 
 var zogLog = require ('zogLog') (moduleName);
 
-exports.get = function (fileUrl, outputFile, callbackEnd)
+exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress)
 {
   var url   = require ('url');
   var zogFs = require ('zogFs');
@@ -28,11 +28,23 @@ exports.get = function (fileUrl, outputFile, callbackEnd)
 
   zogFs.mkdir (path.dirname (outputFile));
 
+  var progress = 0;
   var file = fs.createWriteStream (outputFile);
 
   http.get (options, function (res)
   {
+    var total = 0;
+    if (res.headers.hasOwnProperty ('content-length'))
+      total = res.headers['content-length'];
+
     res.pipe (file);
+
+    if (callbackProgress)
+      res.on ('data', function (data)
+      {
+        progress += data.length;
+        callbackProgress (progress, total);
+      });
 
     res.on ('end', function ()
     {
