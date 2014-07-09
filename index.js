@@ -52,4 +52,4 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress)
         callbackEnd ();
     });
   });
-}
+};
