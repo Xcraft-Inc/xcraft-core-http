@@ -1,19 +1,17 @@
 'use strict';
 
-var moduleName = 'http';
-
 var fs   = require ('fs');
 var path = require ('path');
 
-exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress)
-{
+exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
   var url   = require ('url');
   var zogFs = require ('zogFs');
 
   var protocol = 'http';
   var urlObj = url.parse (fileUrl);
-  if (urlObj.protocol == 'https:')
+  if (urlObj.protocol === 'https:') {
     protocol = 'https';
+  }
 
   var http = require (protocol);
 
@@ -30,26 +28,26 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress)
   var progress = 0;
   var file = fs.createWriteStream (outputFile);
 
-  http.get (options, function (res)
-  {
+  http.get (options, function (res) {
     var total = 0;
-    if (res.headers.hasOwnProperty ('content-length'))
+    if (res.headers.hasOwnProperty ('content-length')) {
       total = res.headers['content-length'];
+    }
 
     res.pipe (file);
 
-    if (callbackProgress)
-      res.on ('data', function (data)
-      {
+    if (callbackProgress) {
+      res.on ('data', function (data) {
         progress += data.length;
         callbackProgress (progress, total);
       });
+    }
 
-    res.on ('end', function ()
-    {
+    res.on ('end', function () {
       file.end ();
-      if (callbackEnd)
+      if (callbackEnd) {
         callbackEnd ();
+      }
     });
   });
 };
