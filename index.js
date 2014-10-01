@@ -5,7 +5,7 @@ var path = require ('path');
 
 exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
   var url   = require ('url');
-  var zogFs = require ('zogFs');
+  var zogFs = require ('xcraft-core-fs');
 
   var protocol = 'http';
   var urlObj = url.parse (fileUrl);
