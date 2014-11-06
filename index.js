@@ -4,8 +4,8 @@ var fs   = require ('fs');
 var path = require ('path');
 
 exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
-  var url   = require ('url');
-  var zogFs = require ('xcraft-core-fs');
+  var url = require ('url');
+  var xFs = require ('xcraft-core-fs');
 
   var protocol = 'http';
   var urlObj = url.parse (fileUrl);
@@ -23,7 +23,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
     rejectUnauthorized: false
   };
 
-  zogFs.mkdir (path.dirname (outputFile));
+  xFs.mkdir (path.dirname (outputFile));
 
   var progress = 0;
   var file = fs.createWriteStream (outputFile);
