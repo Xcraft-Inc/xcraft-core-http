@@ -15,8 +15,7 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
 
   var http = require (protocol);
 
-  var options =
-  {
+  var options = {
     host: urlObj.hostname,
     port: urlObj.port,
     path: urlObj.pathname,
