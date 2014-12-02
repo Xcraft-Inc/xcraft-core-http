@@ -11,14 +11,15 @@
     "helpers",
     "http"
   ],
-  "repository" : {
-    "type" : "file",
-    "url" : "lib/xcraft-core-http"
+  "repository": {
+    "type": "file",
+    "url": "lib/xcraft-core-http"
   },
   "author": "Mathieu Schroeter",
   "license": "MIT",
   "dependencies": {
-    "xcraft-core-fs" : "0.1.0"
+    "request": "^2.49.0",
+    "xcraft-core-fs": "0.1.0"
   },
   "devDependencies": {}
 }

@@ -3,50 +3,40 @@
 var fs   = require ('fs');
 var path = require ('path');
 
+var request = require ('request');
+
 exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
-  var url = require ('url');
   var xFs = require ('xcraft-core-fs');
-
-  var protocol = 'http';
-  var urlObj = url.parse (fileUrl);
-  if (urlObj.protocol === 'https:') {
-    protocol = 'https';
-  }
-
-  var http = require (protocol);
-
-  var options = {
-    host: urlObj.hostname,
-    port: urlObj.port,
-    path: urlObj.pathname,
-    rejectUnauthorized: false
-  };
 
   xFs.mkdir (path.dirname (outputFile));
 
+  var total = 0;
   var progress = 0;
   var file = fs.createWriteStream (outputFile);
 
-  http.get (options, function (res) {
-    var total = 0;
-    if (res.headers.hasOwnProperty ('content-length')) {
-      total = res.headers['content-length'];
-    }
+  request
+    .get ({
+      url: fileUrl,
+      rejectUnauthorized: false
+    })
+    .on ('response', function (res) {
+      if (res.headers.hasOwnProperty ('content-length')) {
+        total = res.headers['content-length'];
+      }
+    })
+    .on ('data', function (data) {
+      if (!callbackProgress) {
+        return;
+      }
 
-    res.pipe (file);
-
-    if (callbackProgress) {
-      res.on ('data', function (data) {
-        progress += data.length;
-        callbackProgress (progress, total);
-      });
-    }
-
-    res.on ('end', function () {
+      progress += data.length;
+      callbackProgress (progress, total);
+    })
+    .on ('end', function () {
       file.end ();
       if (callbackEnd) {
         callbackEnd ();
       }
-    });
-  });
+    })
+    .pipe (file);
 };
