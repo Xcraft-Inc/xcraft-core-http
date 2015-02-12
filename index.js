@@ -32,11 +32,10 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
       progress += data.length;
       callbackProgress (progress, total);
     })
-    .on ('end', function () {
-      file.end ();
+    .pipe (file)
+    .on ('finish', function () {
       if (callbackEnd) {
         callbackEnd ();
       }
-    })
-    .pipe (file);
+    });
 };
