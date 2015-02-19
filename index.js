@@ -34,6 +34,16 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
     })
     .pipe (file)
     .on ('finish', function () {
+      /* HACK: It's a workaround in order to be sure that the handle is closed
+       *       on the downloaded file. Otherwise it's possible that an external
+       *       command can not access the file.
+       *
+       * This problem exists (on some systems) with for example the use of
+       * 7za.exe after the download of a .7z file.
+       */
+      var fd = fs.openSync (outputFile, 'r');
+      fs.closeSync (fd);
+
       if (callbackEnd) {
         callbackEnd ();
       }
