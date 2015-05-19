@@ -22,6 +22,10 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
     .on ('response', function (res) {
       if (res.headers.hasOwnProperty ('content-length')) {
         total = res.headers['content-length'];
+
+        if (callbackProgress) {
+          callbackProgress (0, total);
+        }
       }
     })
     .on ('data', function (data) {
