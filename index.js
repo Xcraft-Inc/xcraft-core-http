@@ -32,6 +32,7 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
       progress += data.length;
       callbackProgress (progress, total);
     })
+    .on ('error', callback)
     .pipe (file)
     .on ('finish', function () {
       /* HACK: It's a workaround in order to be sure that the handle is closed
