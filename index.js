@@ -5,7 +5,7 @@ var path = require ('path');
 
 var request = require ('request');
 
-exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
+exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
   var xFs = require ('xcraft-core-fs');
 
   xFs.mkdir (path.dirname (outputFile));
@@ -44,8 +44,6 @@ exports.get = function (fileUrl, outputFile, callbackEnd, callbackProgress) {
       var fd = fs.openSync (outputFile, 'r');
       fs.closeSync (fd);
 
-      if (callbackEnd) {
-        callbackEnd ();
-      }
+      callback ();
     });
 };
