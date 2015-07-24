@@ -10,6 +10,7 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
 
   xFs.mkdir (path.dirname (outputFile));
 
+  var error = null;
   var total = 0;
   var progress = 0;
   var file = fs.createWriteStream (outputFile);
@@ -20,6 +21,10 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
       rejectUnauthorized: false
     })
     .on ('response', function (res) {
+      if (res.statusCode !== 200) {
+        error = res.statusCode + ' <- ' + fileUrl;
+      }
+
       if (res.headers.hasOwnProperty ('content-length')) {
         total = res.headers['content-length'];
       }
@@ -45,6 +50,6 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
       var fd = fs.openSync (outputFile, 'r');
       fs.closeSync (fd);
 
-      callback ();
+      callback (error);
     });
 };
