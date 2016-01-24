@@ -18,7 +18,8 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
   request
     .get ({
       url: fileUrl,
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
+      timeout: 5000
     })
     .on ('response', function (res) {
       if (res.statusCode !== 200) {
