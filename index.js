@@ -19,7 +19,10 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
     .get ({
       url: fileUrl,
       rejectUnauthorized: false,
-      timeout: 10000
+      timeout: 10000,
+      headers: {
+        Accept: '*/*'
+      }
     })
     .on ('response', function (res) {
       if (res.statusCode !== 200) {
