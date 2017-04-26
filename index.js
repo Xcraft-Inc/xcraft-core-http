@@ -1,6 +1,6 @@
 'use strict';
 
-var fs   = require ('fs');
+var fs = require ('fs');
 var path = require ('path');
 
 var request = require ('request');
@@ -21,8 +21,8 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
       rejectUnauthorized: false,
       timeout: 10000,
       headers: {
-        Accept: '*/*'
-      }
+        Accept: '*/*',
+      },
     })
     .on ('response', function (res) {
       if (res.statusCode !== 200) {
