@@ -5,7 +5,7 @@ var path = require('path');
 
 var request = require('request');
 
-exports.get = function(fileUrl, outputFile, callback, callbackProgress) {
+exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
   var xFs = require('xcraft-core-fs');
 
   xFs.mkdir(path.dirname(outputFile));
@@ -24,7 +24,7 @@ exports.get = function(fileUrl, outputFile, callback, callbackProgress) {
         Accept: '*/*',
       },
     })
-    .on('response', function(res) {
+    .on('response', function (res) {
       if (res.statusCode !== 200) {
         error = res.statusCode + ' <- ' + fileUrl;
       }
@@ -33,7 +33,7 @@ exports.get = function(fileUrl, outputFile, callback, callbackProgress) {
         total = res.headers['content-length'];
       }
     })
-    .on('data', function(data) {
+    .on('data', function (data) {
       if (!callbackProgress) {
         return;
       }
@@ -43,7 +43,7 @@ exports.get = function(fileUrl, outputFile, callback, callbackProgress) {
     })
     .on('error', callback)
     .pipe(file)
-    .on('finish', function() {
+    .on('finish', function () {
       /* HACK: It's a workaround in order to be sure that the handle is closed
        *       on the downloaded file. Otherwise it's possible that an external
        *       command can not access the file.
