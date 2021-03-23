@@ -44,6 +44,8 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
     .on('error', callback)
     .pipe(file)
     .on('finish', function () {
+      file.close();
+
       /* HACK: It's a workaround in order to be sure that the handle is closed
        *       on the downloaded file. Otherwise it's possible that an external
        *       command can not access the file.
