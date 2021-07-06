@@ -21,7 +21,8 @@ exports.get = function (fileUrl, outputFile, callback, callbackProgress) {
       rejectUnauthorized: false,
       timeout: 30000,
       headers: {
-        Accept: '*/*',
+        'User-Agent': 'request',
+        'Accept': '*/*',
       },
     })
     .on('response', function (res) {
